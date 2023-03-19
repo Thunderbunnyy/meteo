@@ -8,7 +8,8 @@ class TodayWeatherViewModel(private val weatherRepository: WeatherRepository) : 
 
     //getCurrentWeather() needs a coroutine context
     val weather by lazyDeferred {
-         weatherRepository.getCurrentWeather()
+        weatherRepository.getCurrentWeather()
+
     }
 
 }
