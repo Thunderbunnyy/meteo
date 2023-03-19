@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">meteo</string>
+    <string name="error_message">Hmm, something went wrong</string>
+    <string name="search_for_a_city">Search for a city</string>
+    <string name="search_icon">search_icon</string>
+    <string name="city_name">CITY NAME</string>
+    <string name="weekly">Weekly</string>
+    <string name="daily">Daily</string>
+</resources>
