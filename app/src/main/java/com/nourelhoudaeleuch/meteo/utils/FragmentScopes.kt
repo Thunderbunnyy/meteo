@@ -2,12 +2,11 @@ package com.nourelhoudaeleuch.meteo.utils
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
+
 
 abstract class FragmentScopes : Fragment(), CoroutineScope {
     private lateinit var job: Job
