@@ -1,4 +1,4 @@
-package com.nourelhoudaeleuch.meteo.data.network
+package com.nourelhoudaeleuch.meteo.data.nework
 
 import okhttp3.Interceptor
 

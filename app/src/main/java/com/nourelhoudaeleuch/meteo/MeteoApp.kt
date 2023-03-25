@@ -1,14 +1,11 @@
 package com.nourelhoudaeleuch.meteo
 
 import android.app.Application
-import android.content.Context
-import android.location.LocationProvider
-import com.google.android.gms.location.LocationServices
 import com.jakewharton.threetenabp.AndroidThreeTen
-import com.nourelhoudaeleuch.meteo.data.database.WeatherDatabase
-import com.nourelhoudaeleuch.meteo.data.network.*
 import com.nourelhoudaeleuch.meteo.data.repository.WeatherRepository
 import com.nourelhoudaeleuch.meteo.data.repository.WeatherRepositoryImpl
+import com.nourelhoudaeleuch.meteo.data.database.WeatherDatabase
+import com.nourelhoudaeleuch.meteo.data.nework.*
 import com.nourelhoudaeleuch.meteo.ui.weather.daily.TodayWeatherViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware

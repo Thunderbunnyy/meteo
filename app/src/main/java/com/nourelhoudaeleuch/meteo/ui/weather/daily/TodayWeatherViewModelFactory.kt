@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.nourelhoudaeleuch.meteo.data.repository.WeatherRepository
 
 class TodayWeatherViewModelFactory(
-    private val weatherRepository: WeatherRepository,
+    private val weatherRepository: WeatherRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return TodayWeatherViewModelFactory(weatherRepository) as T
+        return TodayWeatherViewModel(weatherRepository) as T
     }
 }
