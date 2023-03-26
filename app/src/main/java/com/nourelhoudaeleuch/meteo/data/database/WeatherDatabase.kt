@@ -4,17 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.nourelhoudaeleuch.meteo.data.database.dao.CurrentWeatherDao
-import com.nourelhoudaeleuch.meteo.data.database.entity.Main
+import com.nourelhoudaeleuch.meteo.data.database.dao.*
+import com.nourelhoudaeleuch.meteo.data.database.entity.*
 
 @Database(
-    entities = [Main::class],
-    version = 2,
+    entities = [Main::class, Clouds::class,Weather::class, Wind::class, Coord::class],
+    version = 3,
     exportSchema = false
 )
 
 abstract class WeatherDatabase: RoomDatabase() {
-    abstract fun currentWeatherDao(): CurrentWeatherDao
+    abstract fun temperatureDao(): MainDao
+    abstract fun cloudsDao(): CloudDao
+    abstract fun weatherDao(): WeatherDao
+    abstract fun windDow(): WindDao
+    abstract fun locationDao(): LocationDao
 
     //we need a singleton
     companion object{

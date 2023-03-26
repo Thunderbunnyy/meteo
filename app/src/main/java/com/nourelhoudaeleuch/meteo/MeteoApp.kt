@@ -17,13 +17,18 @@ class MeteoApp : Application(), KodeinAware {
         import(androidXModule(this@MeteoApp))
 
         bind() from singleton { WeatherDatabase(instance()) }
-        bind() from singleton { instance<WeatherDatabase>().currentWeatherDao() }
+        bind() from singleton { instance<WeatherDatabase>().temperatureDao() }
+        bind() from singleton { instance<WeatherDatabase>().cloudsDao() }
+        bind() from singleton { instance<WeatherDatabase>().weatherDao() }
+        bind() from singleton { instance<WeatherDatabase>().windDow() }
+        bind() from singleton { instance<WeatherDatabase>().locationDao() }
 
         bind() from singleton { WeatherApiService(instance()) }
 
         bind<WeatherNetDataSource>() with singleton { WeatherNetDataSourceImpl(instance()) }
         bind<ConnexionInterceptor>() with singleton { ConnexionInterceptorImpl(instance()) }
-        bind<WeatherRepository>() with singleton { WeatherRepositoryImpl(instance(), instance()) }
+        bind<WeatherRepository>() with singleton { WeatherRepositoryImpl(instance(), instance(),
+                                                    instance(),instance(),instance(),instance()) }
 
         bind() from provider { TodayWeatherViewModelFactory(instance()) }
     }

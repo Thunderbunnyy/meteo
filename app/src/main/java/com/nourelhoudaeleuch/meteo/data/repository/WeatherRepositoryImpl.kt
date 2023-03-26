@@ -1,15 +1,19 @@
 package com.nourelhoudaeleuch.meteo.data.repository
 
 import androidx.lifecycle.LiveData
-import com.nourelhoudaeleuch.meteo.data.database.dao.CurrentWeatherDao
-import com.nourelhoudaeleuch.meteo.data.database.entity.Main
+import com.nourelhoudaeleuch.meteo.data.database.dao.*
+import com.nourelhoudaeleuch.meteo.data.database.entity.*
 import com.nourelhoudaeleuch.meteo.data.nework.WeatherNetDataSource
 import com.nourelhoudaeleuch.meteo.data.responses.CurrentWeatherByCityResponse
 import kotlinx.coroutines.*
 import org.threeten.bp.ZonedDateTime
 
 class WeatherRepositoryImpl(
-    private val currentWeatherDao: CurrentWeatherDao,
+    private val mainDao: MainDao,
+    private val weatherDao: WeatherDao,
+    private val cloudDao: CloudDao,
+    private val windDao: WindDao,
+    private val locationDao: LocationDao,
     private val weatherNetDataSource: WeatherNetDataSource
     ) : WeatherRepository {
 
@@ -22,27 +26,59 @@ class WeatherRepositoryImpl(
     }
     }
 
-    override suspend fun getCurrentWeather(): LiveData<out Main> {
+    override suspend fun getTemperature(): LiveData<out Main> {
         initWeatherData()
         return withContext(Dispatchers.IO){
-            return@withContext currentWeatherDao.getWeather()
+            return@withContext mainDao.getTemperature()
         }
 
+    }
+
+    override suspend fun getClouds(): LiveData<out Clouds> {
+        return withContext(Dispatchers.IO){
+            return@withContext cloudDao.getClouds()
+        }
+    }
+
+    override suspend fun getWind(): LiveData<out Wind> {
+        return withContext(Dispatchers.IO){
+            return@withContext windDao.getWind()
+        }
+    }
+
+    override suspend fun getWeather(): LiveData<out Weather> {
+        return withContext(Dispatchers.IO){
+            return@withContext weatherDao.getWeather()
+        }
+    }
+
+    override suspend fun getLocation(): LiveData<out Coord> {
+        return withContext(Dispatchers.IO){
+            return@withContext locationDao.getLocation()
+        }
     }
 
     private fun persistFetchedCurrentWeather(fetchedWeather: CurrentWeatherByCityResponse) {
         GlobalScope.launch(Dispatchers.IO) {
-            currentWeatherDao.upsert(fetchedWeather.main)
+            mainDao.upsert(fetchedWeather.main)
+            weatherDao.upsert(fetchedWeather.weather)
+            cloudDao.upsert(fetchedWeather.clouds)
+            windDao.upsert(fetchedWeather.wind)
+            locationDao.upsert(fetchedWeather.coord)
+
+            fetchedWeather.visibility
+            fetchedWeather.name
         }
     }
 
     private suspend fun initWeatherData() {
+
         if (isFetchCurrentNeeded(ZonedDateTime.now().minusHours(1)))
-            fetchCurrentWeather()
+            fetchWeather()
     }
 
-    private suspend fun fetchCurrentWeather() {
-        weatherNetDataSource.fetchCurrentWeather("Tunis")
+    private suspend fun fetchWeather() {
+        weatherNetDataSource.fetchWeather("Tunis")
     }
 
     private fun isFetchCurrentNeeded(lastFetchTime: ZonedDateTime): Boolean {

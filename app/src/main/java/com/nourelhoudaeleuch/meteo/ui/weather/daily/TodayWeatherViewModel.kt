@@ -7,8 +7,20 @@ import com.nourelhoudaeleuch.meteo.utils.lazyDeferred
 class TodayWeatherViewModel(private val weatherRepository: WeatherRepository) : ViewModel() {
 
     //don't instantiate instantly, wait for call
-    val weather by lazyDeferred {
-        weatherRepository.getCurrentWeather()
+    val temp by lazyDeferred {
+        weatherRepository.getTemperature()
+
     }
 
+    val wind by lazyDeferred {
+        weatherRepository.getWind()
+    }
+
+    val cloud by lazyDeferred {
+        weatherRepository.getClouds()
+    }
+
+    val weather by lazyDeferred {
+        weatherRepository.getWeather()
+    }
 }

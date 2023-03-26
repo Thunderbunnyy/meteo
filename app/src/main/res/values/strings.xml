@@ -6,11 +6,12 @@
     <string name="city_name">CITY NAME</string>
     <string name="weekly">Weekly</string>
     <string name="daily">Daily</string>
-    <string name="visibility">Visibility</string>
     <string name="weather_icon">weatherIcon</string>
     <string name="cloud">Cloud</string>
     <string name="wind">Wind</string>
-    <string name="pressure">Pressure</string>
-    <string name="humidity">Humidity</string>
-    <string name="sunset">Sunset</string>
+    <string name="temperature"> %1$f °C</string>
+    <string name="min_temp">Min Temp: %1$f °C</string>
+    <string name="max_temp">Max Temp: %1$f °C</string>
+
+
 </resources>

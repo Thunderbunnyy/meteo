@@ -17,8 +17,9 @@ const val API_KEY="60465f0acfb15ee7ee182519e7f67c29"
 interface WeatherApiService {
 
     @GET("weather")
-    fun getCurrentWeather(
-        @Query("q") city: String
+    fun getWeather(
+        @Query("q") city: String,
+        @Query("units") metric: String="metric"
     //return a deferred response because the network call might take some time, so we await
     // for it
     ) : Deferred<CurrentWeatherByCityResponse>
