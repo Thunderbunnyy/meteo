@@ -25,12 +25,7 @@ class MeteoApp : Application(), KodeinAware {
         bind<ConnexionInterceptor>() with singleton { ConnexionInterceptorImpl(instance()) }
         bind<WeatherRepository>() with singleton { WeatherRepositoryImpl(instance(), instance()) }
 
-        //bind() from provider { LocationServices.getFusedLocationProviderClient(instance<Context>()) }
-        //bind<LocationProvider>() with singleton { LocationProviderImpl(instance(), instance()) }
-
         bind() from provider { TodayWeatherViewModelFactory(instance()) }
-        //bind() from provider { FutureListWeatherViewModelFactory(instance(), instance()) }
-       // bind() from factory { detailDate: LocalDate -> FutureDetailWeatherViewModelFactory(detailDate, instance(), instance()) }
     }
 
     override fun onCreate() {

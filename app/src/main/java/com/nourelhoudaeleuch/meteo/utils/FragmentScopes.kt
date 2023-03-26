@@ -12,6 +12,7 @@ abstract class FragmentScopes : Fragment(), CoroutineScope {
     private lateinit var job: Job
 
     override val coroutineContext: CoroutineContext
+    // run the job on main thread
         get() = job + Dispatchers.Main
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.nourelhoudaeleuch.meteo.data.repository.WeatherRepository
 
+
 class TodayWeatherViewModelFactory(
     private val weatherRepository: WeatherRepository
 ) : ViewModelProvider.NewInstanceFactory() {

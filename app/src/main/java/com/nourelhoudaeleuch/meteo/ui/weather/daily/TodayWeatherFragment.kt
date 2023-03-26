@@ -1,6 +1,7 @@
 package com.nourelhoudaeleuch.meteo.ui.weather.daily
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,49 +34,48 @@ class TodayWeatherFragment : FragmentScopes(), KodeinAware {
         return inflater.inflate(R.layout.fragment_today_weather, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(TodayWeatherViewModel::class.java)
 
-        val apiService = WeatherApiService(ConnexionInterceptorImpl(this.context!!))
-        val weatherNetDataSource = WeatherNetDataSourceImpl(apiService)
 
-        weatherNetDataSource.downloadedCurrentWeather.observe(this, Observer {
-            status_textview.text = it.weather.toString()
+//        val apiService = WeatherApiService(ConnexionInterceptorImpl(this.context!!))
+//        val weatherNetDataSource = WeatherNetDataSourceImpl(apiService)
+//
+//        weatherNetDataSource.downloadedCurrentWeather.observe(this, Observer {
+//            status_textview.text = it.toString()
+//            Log.d("TAG", "response : ${it.toString()}")
+//        })
+//
+//        GlobalScope.launch(Dispatchers.Main) {
+//            weatherNetDataSource.fetchCurrentWeather("London")
+//        }
 
-        })
-
-        GlobalScope.launch(Dispatchers.Main) {
-            weatherNetDataSource.fetchCurrentWeather("London")
-        }
-
-        //bindUI()
+        bindUI()
     }
 
     private fun bindUI() = launch {
         val currentWeather = viewModel.weather.await()
 
-        currentWeather.observe(this@TodayWeatherFragment, Observer {
+        currentWeather.observe(viewLifecycleOwner, Observer {
             if (it == null) return@Observer
-
             group_loading.visibility = View.GONE
 
-//            updateTemperatures(it.main!!.temp,it.main!!.feelsLike,it.main!!.tempMin,it.main!!.tempMax)
-//            updateWind(it.wind!!.speed)
+            updateTemperatures(it.temp,it.tempMin,it.tempMax)
+//            updateWind(it.wind.speed)
 //            updateVisibility(it.visibility)
-//            //updateStatus(it.weather)
-//            updateCloud(it.clouds!!.all)
-//            updateHumidity(it.main!!.humidity)
-//            updateLocation("London")
+            //updateStatus(it.weather)
+            //updateCloud(it.clouds.all)
+            //updateHumidity(it.humidity)
+            updateLocation("Tunis")
 
         })
     }
 
-    private fun updateTemperatures(temperature: Double, feelsLike: Double,minTemperature: Double,maxTemperature: Double) {
+    private fun updateTemperatures(temperature: Double, minTemperature: Double,maxTemperature: Double) {
 
         temperature_textview.text = "$temperature"
-        feels_like_textview.text = "$feelsLike"
         temp_min.text = "$minTemperature"
         temp_max.text = "$maxTemperature"
     }

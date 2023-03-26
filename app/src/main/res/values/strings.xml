@@ -10,7 +10,7 @@
     <string name="weather_icon">weatherIcon</string>
     <string name="cloud">Cloud</string>
     <string name="wind">Wind</string>
-    <string name="feels_like">Feels Like</string>
+    <string name="pressure">Pressure</string>
     <string name="humidity">Humidity</string>
     <string name="sunset">Sunset</string>
 </resources>

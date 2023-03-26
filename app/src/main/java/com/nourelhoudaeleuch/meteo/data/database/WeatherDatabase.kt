@@ -9,7 +9,8 @@ import com.nourelhoudaeleuch.meteo.data.database.entity.Main
 
 @Database(
     entities = [Main::class],
-    version = 1
+    version = 2,
+    exportSchema = false
 )
 
 abstract class WeatherDatabase: RoomDatabase() {
@@ -29,6 +30,7 @@ abstract class WeatherDatabase: RoomDatabase() {
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext,
                 WeatherDatabase::class.java, "weather.db")
+                .fallbackToDestructiveMigration()
                 .build()
 
     }

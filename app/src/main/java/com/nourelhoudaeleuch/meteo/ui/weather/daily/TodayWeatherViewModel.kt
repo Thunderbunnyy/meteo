@@ -6,10 +6,9 @@ import com.nourelhoudaeleuch.meteo.utils.lazyDeferred
 
 class TodayWeatherViewModel(private val weatherRepository: WeatherRepository) : ViewModel() {
 
-    //getCurrentWeather() needs a coroutine context
+    //don't instantiate instantly, wait for call
     val weather by lazyDeferred {
         weatherRepository.getCurrentWeather()
-
     }
 
 }

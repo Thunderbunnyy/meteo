@@ -15,7 +15,8 @@ class WeatherRepositoryImpl(
 
     init {
         weatherNetDataSource.apply {
-            downloadedCurrentWeather.observeForever { newCurrentWeather ->
+            downloadedCurrentWeather.observeForever { newCurrentWeather:CurrentWeatherByCityResponse ->
+                //persist data
                 persistFetchedCurrentWeather(newCurrentWeather)
             }
     }
@@ -23,7 +24,7 @@ class WeatherRepositoryImpl(
 
     override suspend fun getCurrentWeather(): LiveData<out Main> {
         initWeatherData()
-        return withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO){
             return@withContext currentWeatherDao.getWeather()
         }
 
@@ -31,12 +32,12 @@ class WeatherRepositoryImpl(
 
     private fun persistFetchedCurrentWeather(fetchedWeather: CurrentWeatherByCityResponse) {
         GlobalScope.launch(Dispatchers.IO) {
-            //currentWeatherDao.upsert(fetchedWeather.currentWeatherEntity)
+            currentWeatherDao.upsert(fetchedWeather.main)
         }
     }
 
     private suspend fun initWeatherData() {
-        if (isFetchCurrentNeeded(ZonedDateTime.now().minusMinutes(35)))
+        if (isFetchCurrentNeeded(ZonedDateTime.now().minusHours(1)))
             fetchCurrentWeather()
     }
 
@@ -45,8 +46,8 @@ class WeatherRepositoryImpl(
     }
 
     private fun isFetchCurrentNeeded(lastFetchTime: ZonedDateTime): Boolean {
-        val thirtyMinutesAgo = ZonedDateTime.now().minusMinutes(1)
-        return lastFetchTime.isBefore(thirtyMinutesAgo)
+        val fifteenMinutesAgo = ZonedDateTime.now().minusMinutes(15)
+        return lastFetchTime.isBefore(fifteenMinutesAgo)
     }
 
 }
